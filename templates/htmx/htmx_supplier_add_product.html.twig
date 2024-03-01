@@ -1,0 +1,33 @@
+<div class="row mb-3">
+	<div class="col-md-6 col-8 col-xl-8 col-4">
+		<h4>Nom du produit</h4>
+	</div>
+	<div class="col-md-2 col-4 text-center">
+		<h4>Prix</h4>
+	</div>
+	<div class="col-md-4 col-5 d-none d-sm-block col-xl-2 text-center">
+		<h4>Stock</h4>
+	</div>
+</div>
+{% for stock in stocks %}
+	{% set product = stock.product %}
+	<div class="row" id="stock-row-{{ stock.id }}">
+		<div class="col-md-6 col-8 col-xl-8">
+			<p>{{ product.name }}</p>
+		</div>
+		<div class="col-md-2 col-4 text-center">
+			<p>
+				{{ product.price }}
+				€</p>
+		</div>
+		<div class="col-md-4 col-12 col-xl-2 text-center d-flex align-items-center spinner">
+			<button class="btn minus-btn {{ stock.stock == 1 ? 'btn-danger' : 'btn-primary' }}" hx-post="{{ url('htmx_stock_decrease', {'id': stock.id}) }}" hx-target="#stock-{{ stock.id }}" hx-swap="innerHTML">{{ stock.stock == 1 ? '<i class="fa-solid fa-trash-can"></i>':'-'}}</button>
+			<p class="mb-0 px-2 stock" id="stock-{{ stock.id }}">
+				{% include 'htmx/htmx_stock.html.twig' %}
+			</p>
+			<button class="btn btn-primary plus-btn" hx-post="{{ url('htmx_stock_increase', {'id': stock.id}) }}" hx-target="#stock-{{ stock.id }}" hx-swap="innerHTML">+</button>
+		</div>
+		<hr class='my-3'>
+	</div>
+
+{% endfor %}

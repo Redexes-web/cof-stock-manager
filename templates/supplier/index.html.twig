@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+<a href="{{ path('home') }}" class="btn btn-primary ms-0 m-5">Retourner à l'accueil</a>
+	<h1 class="mx-5">{{ supplier.name }}</h1>
+	<form action="" method="post" class="mb-4" hx-post="{{ path('htmx_supplier_add_product', {'id': supplier.id}) }}" hx-target="#products">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label for="name">Nom</label>
+					<input type="text" class="form-control" id="name" name="name" autocomplete="off" hx-get="{{ path('htmx_supplier_choices') }}" hx-trigger="keyup" hx-target="#choices">
+					<div id="choices" class="border border-primary rounded">
+						{% for product in products %}
+							<p class="choice mb-0 py-2" data-name="{{ product.name }}" data-price="{{ product.price }}">
+								{{ product.name }}
+								- ({{ product.price }}
+								€)</p>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+			<div class="col-md-2">
+				<div class="form-group">
+					<label for="price">Prix</label>
+					<input type="number" class="form-control" id="price" name="price" value="0" autocomplete="off" step="0.01">
+				</div>
+			</div>
+			<div class="col-md-2">
+				<div class="form-group">
+					<label for="stock">Stock</label>
+					<input type="number" class="form-control" id="stock" name="stock" value="1" autocomplete="off">
+				</div>
+			</div>
+			<div class="col-md-2 d-flex justify-content-center align-items-end">
+				<button class="btn btn-primary mt-4 d-block w-100">Ajouter</button>
+			</div>
+		</div>
+	</form>
+	<div class="container" id="products">
+		{% include 'htmx/htmx_supplier_add_product.html.twig'  with {'stocks': supplier.stocks} %}
+	</div>
+{% endblock %}
+
+{% block js %}
+	<script src="{{ asset('assets/js/supplier.js') }}"></script>
+{% endblock %}

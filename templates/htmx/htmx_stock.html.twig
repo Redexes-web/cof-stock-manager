@@ -1,0 +1,4 @@
+{% if stock is defined and stock.id %}
+
+	<input type="number" name="stock" value="{{ stock.stock }}" class="form-control text-center" hx-post="{{ url('htmx_stock_update', {'id': stock.id}) }}" hx-trigger="change" hx-swap="innerHTML" hx-target="#stock-{{ stock.id }}">
+{% endif %}

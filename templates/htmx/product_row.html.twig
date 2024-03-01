@@ -1,0 +1,22 @@
+<script>
+	Toastify({
+text: "{{ message }}",
+duration: 5000,
+destination: "",
+close: true,
+gravity: "top", // `top` or `bottom`
+position: "left", // `left`, `center` or `right`
+stopOnFocus: true, // Prevents dismissing of toast on hover
+style: {
+background: "linear-gradient(to right, #ff7474, #ff6d6d, #ff2b2b, #ff0000)"
+},
+onClick: function () {} // Callback after click
+}).showToast();
+</script>
+<div class="row" id="product-{{ product.id }}">
+	<div class="col-7">{{ product.name }}</div>
+	<div class="col-2">{{ product.price }}</div>
+	<div class="col-3">
+		<p class="btn btn-danger" hx-get="{{ path('htmx_product_delete',{id:product.id}) }}" hx-confirm="Etes-vous sûr?" hx-target="#product-{{ product.id }}" hx-swap="outerHTML">Supprimer</p>
+	</div>
+</div>

@@ -1,0 +1,4 @@
+{% for product in products %}
+    <p class="choice mb-0 py-2" data-name="{{ product.name }}" data-price="{{ product.price }}">
+        {{ product.name }} - ({{ product.price }} €)</p>
+{% endfor %}

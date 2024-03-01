@@ -1,0 +1,35 @@
+#choices p:hover {
+  color: #000000;
+  background-color: #adadad;
+  cursor: pointer;
+}
+#choices{
+    max-height: 200px;
+    z-index: 1;
+    overflow: auto;
+    display: none;
+    position: absolute;
+    background-color: white;
+}
+
+.btn-minus, .btn-plus {
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    font-size: 20px;
+    line-height: 20px;
+    border-radius: 50%;
+    border: 1px solid #000;
+    background-color: #fff;
+    vertical-align: middle;
+}
+
+.btn-minus {
+    margin-right: 10px;
+}
+
+.btn-plus {
+    margin-left: 10px;
+}
+
