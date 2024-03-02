@@ -41,7 +41,6 @@ class HtmxController extends AbstractController
         CofSupplierRepository $supplierRepository,
         CofStockRepository $stockRepository
     ): Response {
-        dump($request->request->all());
         /**
          * @var ?CofSupplier $supplier
          */
