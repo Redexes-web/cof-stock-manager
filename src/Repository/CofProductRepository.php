@@ -40,7 +40,6 @@ class CofProductRepository extends ServiceEntityRepository
     }
     public function findLikeName(?string $name, ?string $supplierId = null)
     {
-        dump($name, $supplierId);
         return $this->createQueryBuilder('p')
             ->leftJoin('p.stocks', 's')
             ->leftJoin('s.supplier', 'sp')

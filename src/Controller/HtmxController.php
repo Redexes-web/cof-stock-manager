@@ -238,7 +238,6 @@ class HtmxController extends AbstractController
             // check if $request->request->get('quantity') is less than or equal to the stock
             // check if soldAt is a valid date
             $errors = [];
-            dump($request->request->all());
             if (!$request->request->get('productId')) {
                 $errors[] = 'Le produit est obligatoire';
             }
