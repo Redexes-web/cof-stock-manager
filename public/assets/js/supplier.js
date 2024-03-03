@@ -1,38 +1,47 @@
 $(function () {
-    function main() {
-        $('#name').on('focus', function () {
-            console.log('hello');
-            $('#choices').show();
+    function productChoices(rowId, hasPrice = true) {
+        $(rowId + ' .name').on('focus', function () {
+            $(rowId + ' .choices').show();
         });
 
-        $('#name').on('blur', function () {
+        $(rowId + ' .name').on('blur', function () {
             setTimeout(function () {
-                $('#choices').hide();
+                $(rowId + ' .choices').hide();
             }, 100);
         });
 
         // on load and resize set size of choices same as input
         // on resize
         function setChoicesSize() {
-            $('#choices').css('width', $('#name').outerWidth());
-            $('#choices').css('left', $('#name').position().left);
-            $('#choices').css('top', $('#name').position().top + $('#name').outerHeight());
+            $(rowId + ' .choices').css('width', $(rowId + ' .name').outerWidth());
+            $(rowId + ' .choices').css('left', $(rowId + ' .name').position().left);
+            $(rowId + ' .choices').css('top', $(rowId + ' .name').position().top + $(rowId + ' .name').outerHeight());
         };
         setChoicesSize();
         $(window).on('resize', setChoicesSize);
         // on click of choice
-        $('.choice').on('click', function () {
-            console.log($(this).data('name'));
-            $('#name').val($(this).data('name'));
-            $('#price').val($(this).data('price'));
-            $('#choices').hide();
+        $(rowId + ' .choice').on('click', function () {
+            $(rowId + ' .name').val($(this).data('name'));
+            if (hasPrice)
+                $(rowId + ' .price').val($(this).data('price'));
+            //if $(this).data('id') exists then add value to hidden input rowId + ' .product-id'
+            console.log($(this))
+            if ($(this).data('id'))
+                $(rowId + ' .product-id').val($(this).data('id'));
+            $(rowId + ' .choices').hide();
         });
+    }
+    function main() {
+        productChoices('#product-row-1');
+        //check if #product-row-2 exists
+        if ($('#product-row-2').length)
+            productChoices('#product-row-2', false);
 
         //on click on .minus-btn check if new value is 1 then add <i class="fa-solid fa-trash-can"></i> to .minus-btn
         $('.minus-btn').on('click', function () {
             var input = $(this).parent().find('input');
             var value = parseInt(input.val());
-            if (value -1 === 1) {
+            if (value - 1 === 1) {
                 $(this).html('<i class="fa-solid fa-trash-can"></i>');
                 //add class .btn-danger to .minus-btn and remove class .btn-primary
                 $(this).addClass('btn-danger');
@@ -65,6 +74,26 @@ $(function () {
                 var id = event.target.id.replace('stock-', '');
                 $('#stock-row-' + id).remove();
             }
+        }
+        // event.detail.pathInfo.requestPath contains "htmx_modal_new_sell"
+        if (event.detail.pathInfo.requestPath.includes("htmx_modal_new_sell")) {
+            //get id from event.detail.pathInfo.requestPath like "htmx/htmx_modal_new_sell/1"
+            //call with jquery ajax "htmx/htmx_reload_products/{id}" and target "#products"
+            console.log(event.detail.pathInfo.requestPath.split("/").pop());
+            var id = event.detail.pathInfo.requestPath.split("/").pop();
+            $.ajax({
+                url: "htmx/htmx_reload_products/" + id,
+                success: function (result) {
+                    $('#products').html(result);
+                }
+            });
+            // htmx/htmx_reload_sells/{id}
+            $.ajax({
+                url: "htmx/htmx_reload_sells/" + id,
+                success: function (result) {
+                    $('#sells').html(result);
+                }
+            });
         }
     });
 });

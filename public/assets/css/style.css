@@ -1,9 +1,35 @@
-#choices p:hover {
+/* .fw-lighter {
+    font-weight: lighter;
+}
+
+.fw-light {
+    font-weight: light;
+}
+
+.fw-normal {
+    font-weight: normal;
+}
+
+.fw-bold {
+    font-weight: bold;
+}
+
+.fw-bolder {
+    font-weight: bolder;
+}
+ */
+
+ .box-shadow-custom {
+    box-shadow: 0px 0px 7px 0px #000000;
+    border-radius: 15px;
+}
+
+.choices p:hover {
   color: #000000;
   background-color: #adadad;
   cursor: pointer;
 }
-#choices{
+.choices{
     max-height: 200px;
     z-index: 1;
     overflow: auto;

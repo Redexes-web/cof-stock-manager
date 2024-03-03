@@ -38,11 +38,15 @@ class CofProductRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-    public function findLikeName(?string $name)
+    public function findLikeName(?string $name, ?string $supplierId = null)
     {
+        dump($name, $supplierId);
         return $this->createQueryBuilder('p')
-            ->andWhere('p.name LIKE :name')
+            ->leftJoin('p.stocks', 's')
+            ->leftJoin('s.supplier', 'sp')
+            ->andWhere('p.name LIKE :name' . ($supplierId ? ' AND sp.id = :supplierId' : ''))
             ->setParameter('name', '%' . $name . '%')
+            ->setParameter('supplierId', $supplierId)
             ->getQuery()
             ->getResult();
     

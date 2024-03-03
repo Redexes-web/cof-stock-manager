@@ -1,0 +1,10 @@
+<div class="modal-header">
+	<h1 class="modal-title fs-5" id="modalLabel">Nouvelle Vente</h1>
+	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+<h2 class="text-success text-center">Vente ajouté avec succès!</h2>
+		<div class="mt-4 pt-4 border-top d-flex justify-content-end">
+			<button type="button" class="btn btn-primary"  hx-get="{{ path('htmx_modal_new_sell',{id:supplier.id}) }}" hx-target="#modal-content" hx-swap="innerHTML">Nouvelle vente</button>
+		</div>
+</div>

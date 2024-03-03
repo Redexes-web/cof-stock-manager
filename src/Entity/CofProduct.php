@@ -34,9 +34,15 @@ class CofProduct
      */
     private $stocks;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Sell::class, mappedBy="product", orphanRemoval=true)
+     */
+    private $sells;
+
     public function __construct()
     {
         $this->stocks = new ArrayCollection();
+        $this->sells = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -92,6 +98,36 @@ class CofProduct
             // set the owning side to null (unless already changed)
             if ($stock->getProduct() === $this) {
                 $stock->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Sell>
+     */
+    public function getSells(): Collection
+    {
+        return $this->sells;
+    }
+
+    public function addSell(Sell $sell): self
+    {
+        if (!$this->sells->contains($sell)) {
+            $this->sells[] = $sell;
+            $sell->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSell(Sell $sell): self
+    {
+        if ($this->sells->removeElement($sell)) {
+            // set the owning side to null (unless already changed)
+            if ($sell->getProduct() === $this) {
+                $sell->setProduct(null);
             }
         }
 

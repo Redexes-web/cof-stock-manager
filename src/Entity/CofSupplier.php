@@ -29,9 +29,15 @@ class CofSupplier
      */
     private $stocks;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Sell::class, mappedBy="supplier", orphanRemoval=true)
+     */
+    private $sells;
+
     public function __construct()
     {
         $this->stocks = new ArrayCollection();
+        $this->sells = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -75,6 +81,36 @@ class CofSupplier
             // set the owning side to null (unless already changed)
             if ($stock->getSupplier() === $this) {
                 $stock->setSupplier(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Sell>
+     */
+    public function getSells(): Collection
+    {
+        return $this->sells;
+    }
+
+    public function addSell(Sell $sell): self
+    {
+        if (!$this->sells->contains($sell)) {
+            $this->sells[] = $sell;
+            $sell->setSupplier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSell(Sell $sell): self
+    {
+        if ($this->sells->removeElement($sell)) {
+            // set the owning side to null (unless already changed)
+            if ($sell->getSupplier() === $this) {
+                $sell->setSupplier(null);
             }
         }
 

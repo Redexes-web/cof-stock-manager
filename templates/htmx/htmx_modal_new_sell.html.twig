@@ -1,0 +1,37 @@
+<div class="modal-header">
+	<h1 class="modal-title fs-5" id="modalLabel">Nouvelle Vente</h1>
+	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+	<form action="" method="post" hx-post="{{ path('htmx_modal_new_sell',{id:supplier.id}) }}" hx-target="#modal-content" hx-swap="innerHTML" hx-trigger="submit">
+		{% if errors is not empty %}
+			<div class="alert alert-danger">
+				{% for error in errors %}
+					<p class="mb-0">{{ error }}</p>
+				{% endfor %}
+			</div>
+		{% endif %}
+		<div class="form-group" id="product-row-2">
+			<label for="productName">Produit</label>
+			<input type="text" class="form-control name" id="productName" name="name" autocomplete="off" hx-get="{{ path('htmx_supplier_choices',{supplierId:supplier.id}) }}" hx-trigger="keyup" hx-target="#choices2">
+			<input type="hidden" name="productId" class="product-id">
+			<div class="border border-primary rounded choices" id="choices2">
+				{% include 'htmx/htmx_product_choices.html.twig' %}
+
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<label class="mt-2 mb-1" for="productQuantity">Quantité</label>
+					<input type="number" class="form-control" id="productQuantity" name="quantity" value="1" autocomplete="off">
+				</div>
+				<div class="col-md-6">
+					<label class="mt-2 " for="soldAt">Date de vente</label>
+					<input type="date" class="form-control" id="soldAt" name="soldAt" value="{{ date()|date('Y-m-d') }}" autocomplete="off">
+				</div>
+			</div>
+		</div>
+		<div class="mt-4 pt-4 border-top d-flex justify-content-end">
+			<button class="btn btn-primary">Ajouter la vente</button>
+		</div>
+	</form>
+</div>
