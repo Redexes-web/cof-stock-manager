@@ -1,0 +1,58 @@
+{% set isEdit = supplier is defined and supplier.id is not null %}
+{% set title = isEdit ? 'Modifier la boutique' : 'Nouvelle Boutique' %}
+{% set supplier = supplier is defined ? supplier : {} %}
+{% set errors = errors is defined ? errors : [] %}
+{% set date = date is defined ? date : date() %}
+{% set path = path is defined ? path : '' %}
+<div class="modal-header">
+	<h1 class="modal-title fs-5" id="modalLabel">{{ title }}</h1>
+	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+	<form action="" method="post" hx-post="{{ isEdit ? path('htmx_supplier_edit',{id:supplier.id}) : path('htmx_supplier_new') }}" hx-target="#modal-content" hx-swap="innerHTML" hx-trigger="submit">
+		{% if errors is not empty %}
+			<div class="alert alert-danger">
+				{% for error in errors %}
+					<p class="mb-0">{{ error }}</p>
+				{% endfor %}
+			</div>
+		{% endif %}
+		<div class="form-group" id="product-row-2">
+			<label class="mt-2 mb-1" for="name">Nom de la boutique</label>
+			<input type="text" class="form-control" id="name" name="name" autocomplete="off" value="{{ isEdit ? supplier.name : '' }}">
+			<div class="row mt-2 mb-1">
+				<div class="col-md-6">
+					<label for="rentPrice">Prix du loyer</label>
+					<div class="input-group mb-3">
+						<input type="number" class="form-control" id="rentPrice" name="rentPrice" autocomplete="off" value="{{ isEdit ? supplier.rentPrice : 0 }}" min="0" step="0.01" aria-describedby="basic-addon1">
+						<strong class="input-group-text" id="basic-addon1">€
+						</strong>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<label for="commissionPercentage">Pourcentage de commission</label>
+					<div class="input-group mb-3">
+						<input type="number" class="form-control" id="commissionPercentage" name="commissionPercentage" autocomplete="off" value="{{ isEdit ? supplier.commissionPercentage : 0 }}" min="0" step="0.01" aria-describedby="basic-addon2">
+						<strong class="input-group-text" id="basic-addon2">%
+						</strong>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6">
+					<label class="mt-2 mb-1" for="startAt">Date de début</label>
+					<input type="date" class="form-control" id="startAt" name="startAt" value="{{ isEdit ? supplier.startAt|date('Y-m-d') : date|date('Y-m-d') }}" autocomplete="off">
+
+				</div>
+				<div class="col-md-6">
+					<label class="mt-2 " for="endAt">Date de fin</label>
+					<input type="date" class="form-control" id="endAt" name="endAt" value="{{ isEdit ? supplier.endAt|date('Y-m-d') : date|date('Y-m-d') }}" autocomplete="off">
+				</div>
+			</div>
+		</div>
+		<div class="mt-4 pt-4 border-top d-flex justify-content-end">
+			<button class="btn btn-primary">{{ isEdit ? 'Modifier' : 'Ajouter' }}</button>
+		</div>
+	</form>
+</div>

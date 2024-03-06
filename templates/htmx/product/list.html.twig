@@ -23,7 +23,7 @@
 		<div class="col-md-4 col-12 col-xl-2 text-center d-flex align-items-center spinner">
 			<button class="btn minus-btn {{ stock.stock == 1 ? 'btn-danger' : 'btn-primary' }}" hx-post="{{ url('htmx_stock_decrease', {'id': stock.id}) }}" hx-target="#stock-{{ stock.id }}" hx-swap="innerHTML">{{ stock.stock == 1 ? '<i class="fa-solid fa-trash-can"></i>':'-'}}</button>
 			<p class="mb-0 px-2 stock" id="stock-{{ stock.id }}">
-				{% include 'htmx/htmx_stock.html.twig' %}
+				{% include 'htmx/stock/show.html.twig' %}
 			</p>
 			<button class="btn btn-primary plus-btn" hx-post="{{ url('htmx_stock_increase', {'id': stock.id}) }}" hx-target="#stock-{{ stock.id }}" hx-swap="innerHTML">+</button>
 		</div>

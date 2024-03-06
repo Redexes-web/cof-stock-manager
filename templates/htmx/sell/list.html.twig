@@ -1,0 +1,66 @@
+{{ knp_pagination_sortable(sells, 'date', 's.soldAt', {
+    'options': [
+        {
+            'value': 's.soldAt',
+            'label': 'Date décroissante',
+            'direction': 'desc'
+        },
+        {
+            'value': 's.soldAt',
+            'label': 'Date croissante',
+            'direction': 'asc'
+        },
+        {
+            'value': 'p.name',
+            'label': 'Nom du produit',
+            'direction': 'asc'
+        },
+        {
+            'value': 'p.name',
+            'label': 'Nom du produit (inverse)',
+            'direction': 'desc'
+        }
+    ]|json_encode,'currentSort': sort, 'currentDirection' : direction
+}, {}, 'partials/sortable.html.twig') }}
+
+{# {{ knp_pagination_sortable(sells, 'name', 'p.name', {}, {}, 'partials/sortable.html.twig') }} #}
+<div class="row mb-3">
+	<div class="col-md-2 col-2 text-center">
+		<h4>Date d'achat</h4>
+	</div>
+	<div class="col-md-6 col-6 col-xl-6">
+		<h4>Nom du produit</h4>
+	</div>
+	<div class="col-md-2 col-2 text-end">
+		<h4>Total</h4>
+	</div>
+	<div class="col-md-2 col-2 text-end">
+		<h4>Action</h4>
+	</div>
+</div>
+{% for sell in sells %}
+	{% set product = sell.product %}
+	<div class="row" id="sell-row-{{ sell.id }}">
+		<div class="col-md-2 col-2 text-center">
+			<p>{{ sell.soldAt|date("Y-m-d H:i:s", "Europe/Paris")|format_datetime('long', 'none', locale='fr') }}</p>
+		</div>
+		<div class="col-md-6 col-6 col-xl-6">
+			<p>
+				{{ product.name }}
+				x
+				{{ sell.quantity }}</p>
+		</div>
+		<div class="col-md-2 col-2 text-end">
+			<p>{{ product.price * sell.quantity }}
+				€</p>
+		</div>
+		<div class="col-md-2 col-2 text-end">
+			<button class="btn btn-danger" hx-get="{{ path('htmx_sell_delete',{id:sell.id}) }}" hx-confirm="Etes-vous sûr de vouloir supprimer cette vente ?" hx-target="#sell-row-{{ sell.id }}" hx-swap="outerHTML">Supprimer</button>
+		</div>
+		<hr class='my-3'>
+	</div>
+
+{% endfor %}
+<div class="navigation">
+	{{ knp_pagination_render(sells) }}
+</div>

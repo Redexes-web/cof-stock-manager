@@ -1,0 +1,44 @@
+<h1 class="display-4">{{ supplier.name }}</h1>
+<div data-slug="{{ supplier.slug }}" data-id="{{ supplier.id }}" id="supplier-slug"></div>
+<p>Periode:
+	<span class="text-success">
+		{{ supplier.startAt|date("Y-m-d H:i:s", "Europe/Paris")|format_datetime('long', 'none', locale='fr') }}
+	</span>
+	-
+	<span class="text-danger">
+		{{ supplier.endAt|date("Y-m-d H:i:s", "Europe/Paris")|format_datetime('long', 'none', locale='fr') }}
+	</span>
+</p>
+<p>Loyer Mensuel:
+	<strong>
+		{{ supplier.rentPrice }}€
+	</strong>
+</p>
+<p>Commission:
+	<strong>
+		{{ supplier.commissionPercentage }}%
+	</strong>
+</p>
+<p>Nombre d'articles:
+	<strong>
+		{{ supplier.stocks|map(item => item.stock)|reduce((carry, item) => carry + item, 0) }}
+	</strong>
+</p>
+<p>
+	Nombre de ventes:
+	<strong>
+		{{ supplier.sells|length }}
+	</strong>
+</p>
+<p>Valeur totale des ventes:
+	<strong>
+		{{ supplier.sells|map(item => item.quantity * item.product.price)|reduce((carry, item) => carry + item, 0) }}
+	</strong>
+	€
+</p>
+<p>Valeur totale des stocks:
+	<strong>
+		{{ supplier.stocks|map(item => item.stock * item.product.price)|reduce((carry, item) => carry + item, 0) }}
+	</strong>
+	€
+</p>

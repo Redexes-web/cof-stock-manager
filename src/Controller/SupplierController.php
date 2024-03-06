@@ -12,14 +12,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class SupplierController extends AbstractController
 {
     /**
-     * @Route("/{name}", name="supplier_show")
+     * @Route("/{slug}", name="supplier_show")
      * 
      * @param CofSupplier $supplier
      * @return Response
      */
-    public function index(string $name, CofSupplierRepository $supplierRepository, CofProductRepository $productRepository): Response
+    public function index(string $slug, CofSupplierRepository $supplierRepository, CofProductRepository $productRepository): Response
     {
-        $supplier = $supplierRepository->findOneBy(['name' => $name]);
+        $supplier = $supplierRepository->findOneBy(['slug' => $slug]);
         if (!$supplier)
             throw $this->createNotFoundException('The supplier does not exist');
 

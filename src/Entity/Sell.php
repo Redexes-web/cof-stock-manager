@@ -39,6 +39,8 @@ class Sell
      */
     private $quantity;
 
+    private $total;
+
     public function getId(): ?int
     {
         return $this->id;

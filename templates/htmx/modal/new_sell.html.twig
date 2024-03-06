@@ -3,7 +3,7 @@
 	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
-	<form action="" method="post" hx-post="{{ path('htmx_modal_new_sell',{id:supplier.id}) }}" hx-target="#modal-content" hx-swap="innerHTML" hx-trigger="submit">
+	<form action="" method="post" hx-post="{{ path('htmx_modal_sell_new',{id:supplier.id}) }}" hx-target="#modal-content" hx-swap="innerHTML" hx-trigger="submit">
 		{% if errors is not empty %}
 			<div class="alert alert-danger">
 				{% for error in errors %}
@@ -16,7 +16,7 @@
 			<input type="text" class="form-control name" id="productName" name="name" autocomplete="off" hx-get="{{ path('htmx_supplier_choices',{supplierId:supplier.id}) }}" hx-trigger="keyup" hx-target="#choices2">
 			<input type="hidden" name="productId" class="product-id">
 			<div class="border border-primary rounded choices" id="choices2">
-				{% include 'htmx/htmx_product_choices.html.twig' %}
+				{% include 'htmx/product/choices.html.twig' %}
 
 			</div>
 			<div class="row">

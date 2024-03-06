@@ -1,15 +1,12 @@
-//dom content loaded
 document.addEventListener('DOMContentLoaded', function () {
-    console.log("home.js");
     document.addEventListener('htmx:afterSwap', function (event) {
-        console.log('htmx:afterSwap', event);
-        console.log('htmx:afterSwap', event);
-        console.log('htmx:afterSwap', event);
+        if (event.detail.pathInfo.requestPath.includes("htmx/supplier/new")) {
+            $.ajax({
+                url: "htmx/suppliers-load/",
+                success: function (result) {
+                    $('#suppliers').html(result);
+                }
+            });
+        }
     });
 });
-// $(function () {
-//     console.log("home.js");
-//     document.addEventListener('htmx:after-swap', function (event) {
-//         console.log('htmx:afterSwap', event);
-//     });
-// });

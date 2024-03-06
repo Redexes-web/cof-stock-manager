@@ -4,26 +4,13 @@
 {% endblock %}
 
 {% block body %}
-	<h1 class="text-primary">Liste des boutiques</h1>
-	<div class="row">
-		{% for supplier in suppliers %}
-			<div class="col-md-4">
-				<a href="{{ path('supplier_show',{name:supplier.name}) }}" class="nav-link">
-					<div class="card border-primary mb-3" style="max-width: 18rem;">
-						<div class="card-header">{{ supplier.name }}</div>
-						<div class="card-body">
-							<h5 class="card-title">Nombre d'articles:
-								{{ supplier.stocks|map(item => item.stock)|reduce((carry, item) => carry + item, 0) }}</h5>
-							<h5 class="card-title">Valeur totale:
-								{{ supplier.stocks|map(item => item.stock * item.product.price)|reduce((carry, item) => carry + item, 0) }}
-								€</p>
-						</div>
-					</div>
-				</a>
-			</div>
-
-		{% endfor %}
+	<div class="d-flex justify-content-between align-items-center mb-3">
+		<h1 class="text-primary">Liste des boutiques</h1>
+		<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal" hx-get="{{ path('htmx_supplier_new') }}" hx-target="#modal-content" hx-swap="innerHTML">
+			Ajouter une boutique
+		</button>
 	</div>
+	<div class="row" id="suppliers" hx-get="{{ path('htmx_load_suppliers') }}" hx-target="#suppliers" hx-swap="innerHTML" hx-trigger="load"></div>
 	<h2>Liste des produits</h2>
 	<div class="row">
 		<div class="col-7">Nom</div>
@@ -35,13 +22,12 @@
 			<div class="col-7">{{ product.name }}</div>
 			<div class="col-2">{{ product.price }}</div>
 			<div class="col-3">
-				<p class="btn btn-danger" hx-get="{{ path('htmx_product_delete',{id:product.id}) }}" hx-confirm="Etes-vous sûr?" hx-target="#product-{{ product.id }}" hx-swap="outerHTML"
-            >Supprimer</p>
+				<p class="btn btn-danger" hx-get="{{ path('htmx_product_delete',{id:product.id}) }}" hx-confirm="Etes-vous sûr?" hx-target="#product-{{ product.id }}" hx-swap="outerHTML">Supprimer</p>
 			</div>
 		</div>
 	{% endfor %}
 {% endblock %}
 
 {% block js %}
-    <script src="{{ asset('assets/js/home.js') }}"></script>
+	<script src="{{ asset('assets/js/home.js') }}"></script>
 {% endblock %}
