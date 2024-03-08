@@ -1,22 +1,22 @@
-<div class="row mb-3">
-	<div class="col-md-6 col-8 col-xl-8 col-4">
-		<h4>Nom du produit</h4>
+<div class="row h-54px bg-secondary rounded-top">
+	<div class="d-flex align-items-center col-md-6 col-8 col-xl-8 col-4">
+		<p class="fw-bold m-0 text-light">Nom du produit</p>
 	</div>
-	<div class="col-md-2 col-4 text-center">
-		<h4>Prix</h4>
+	<div class="d-flex align-items-center justify-content-center col-md-2 col-4 text-center">
+		<p class="fw-bold m-0 text-light">Prix</p>
 	</div>
-	<div class="col-md-4 col-5 d-none d-sm-block col-xl-2 text-center">
-		<h4>Stock</h4>
+	<div class="align-items-center justify-content-center col-md-4 col-5 d-none d-sm-flex col-xl-2 text-center">
+		<p class="fw-bold m-0 text-light">Stock</p>
 	</div>
 </div>
 {% for stock in stocks %}
 	{% set product = stock.product %}
-	<div class="row" id="stock-row-{{ stock.id }}">
-		<div class="col-md-6 col-8 col-xl-8">
-			<p>{{ product.name }}</p>
+	<div class="row py-2 {{ loop.index0 % 2 ? 'bg-dark-subtle' : 'bg-body-secondary' }} {{ loop.last ? 'rounded-bottom' : '' }}" id="stock-row-{{ stock.id }}">
+		<div class="col-md-6 col-8 col-xl-8 d-flex align-items-center">
+			<p class="mb-0">{{ product.name }}</p>
 		</div>
-		<div class="col-md-2 col-4 text-center">
-			<p>
+		<div class="col-md-2 col-4 text-center d-flex align-items-center justify-content-center">
+			<p class="mb-0">
 				{{ product.price }}
 				€</p>
 		</div>
@@ -27,7 +27,6 @@
 			</p>
 			<button class="btn btn-primary plus-btn" hx-post="{{ url('htmx_stock_increase', {'id': stock.id}) }}" hx-target="#stock-{{ stock.id }}" hx-swap="innerHTML">+</button>
 		</div>
-		<hr class='my-3'>
 	</div>
 
 {% endfor %}

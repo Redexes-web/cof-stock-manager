@@ -3,11 +3,11 @@
 namespace App\Controller\Htmx;
 
 use App\Entity\Sell;
-use App\Entity\CofSupplier;
+use App\Entity\Supplier;
 use App\Repository\SellRepository;
-use App\Repository\CofStockRepository;
-use App\Repository\CofProductRepository;
-use App\Repository\CofSupplierRepository;
+use App\Repository\StockRepository;
+use App\Repository\ProductRepository;
+use App\Repository\SupplierRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,15 +19,15 @@ class SellController extends AbstractController
     /**
      * @Route("htmx/{id}/sell/new", name="htmx_modal_sell_new")
      * 
-     * @param CofSupplier $supplier
+     * @param Supplier $supplier
      * @return Response
      */
     public function htmx_modal_sell_new(
         int $id,
         Request $request,
-        CofProductRepository $productRepository,
-        CofSupplierRepository $supplierRepository,
-        CofStockRepository $stockRepository,
+        ProductRepository $productRepository,
+        SupplierRepository $supplierRepository,
+        StockRepository $stockRepository,
         SellRepository $sellRepository
     ): Response {
         if ($request->isMethod('POST')) {
@@ -93,19 +93,19 @@ class SellController extends AbstractController
     /**
      * @Route("htmx/{id}/sell/load", name="htmx_load_sells")
      * 
-     * @param CofSupplier $supplier
+     * @param Supplier $supplier
      * @return Response
      */
     public function htmx_reload_sells(
         int $id,
         Request $request,
-        CofProductRepository $productRepository,
-        CofSupplierRepository $supplierRepository,
+        ProductRepository $productRepository,
+        SupplierRepository $supplierRepository,
         SellRepository $sellRepository,
         PaginatorInterface $paginator
     ): Response {
         /**
-         * @var ?CofSupplier $supplier
+         * @var ?Supplier $supplier
          */
         $page = $request->query->get('page', 1);
         $sort = $request->query->get('sort', 's.soldAt');
@@ -130,8 +130,8 @@ class SellController extends AbstractController
      */
     public function htmx_sell_delete(
         int $id,
-        CofProductRepository $productRepository,
-        CofSupplierRepository $supplierRepository,
+        ProductRepository $productRepository,
+        SupplierRepository $supplierRepository,
         SellRepository $sellRepository
     ): Response {
         /**

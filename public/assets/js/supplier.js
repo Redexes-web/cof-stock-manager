@@ -7,7 +7,7 @@ $(function () {
         $(rowId + ' .name').on('blur', function () {
             setTimeout(function () {
                 $(rowId + ' .choices').hide();
-            }, 100);
+            }, 400);
         });
         function setChoicesSize() {
             if (!$(rowId + ' .choices').length)

@@ -23,13 +23,13 @@ class Sell
     private $soldAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=CofProduct::class, inversedBy="sells")
+     * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="sells")
      * @ORM\JoinColumn(nullable=false)
      */
     private $product;
 
     /**
-     * @ORM\ManyToOne(targetEntity=CofSupplier::class, inversedBy="sells")
+     * @ORM\ManyToOne(targetEntity=Supplier::class, inversedBy="sells")
      * @ORM\JoinColumn(nullable=false)
      */
     private $supplier;
@@ -58,24 +58,24 @@ class Sell
         return $this;
     }
 
-    public function getProduct(): ?CofProduct
+    public function getProduct(): ?Product
     {
         return $this->product;
     }
 
-    public function setProduct(?CofProduct $product): self
+    public function setProduct(?Product $product): self
     {
         $this->product = $product;
 
         return $this;
     }
 
-    public function getSupplier(): ?CofSupplier
+    public function getSupplier(): ?Supplier
     {
         return $this->supplier;
     }
 
-    public function setSupplier(?CofSupplier $supplier): self
+    public function setSupplier(?Supplier $supplier): self
     {
         $this->supplier = $supplier;
 

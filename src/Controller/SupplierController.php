@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\CofSupplier;
-use App\Repository\CofProductRepository;
-use App\Repository\CofSupplierRepository;
+use App\Entity\Supplier;
+use App\Repository\ProductRepository;
+use App\Repository\SupplierRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,10 +14,10 @@ class SupplierController extends AbstractController
     /**
      * @Route("/{slug}", name="supplier_show")
      * 
-     * @param CofSupplier $supplier
+     * @param Supplier $supplier
      * @return Response
      */
-    public function index(string $slug, CofSupplierRepository $supplierRepository, CofProductRepository $productRepository): Response
+    public function index(string $slug, SupplierRepository $supplierRepository, ProductRepository $productRepository): Response
     {
         $supplier = $supplierRepository->findOneBy(['slug' => $slug]);
         if (!$supplier)

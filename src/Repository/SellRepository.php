@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\CofSupplier;
+use App\Entity\Supplier;
 use App\Entity\Sell;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -41,7 +41,7 @@ class SellRepository extends ServiceEntityRepository
     }
     // findBySupplier($supplier,$page)
 
-    public function findBySupplierQuery(CofSupplier $supplier, string $sort, string $direction)
+    public function findBySupplierQuery(Supplier $supplier, string $sort, string $direction)
     {
         $q = $this->createQueryBuilder('s')
             ->leftJoin('s.product', 'p')

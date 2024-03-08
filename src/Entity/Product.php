@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\CofProductRepository;
+use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=CofProductRepository::class)
+ * @ORM\Entity(repositoryClass=ProductRepository::class)
  */
-class CofProduct
+class Product
 {
     /**
      * @ORM\Id
@@ -30,7 +30,7 @@ class CofProduct
     private $price;
 
     /**
-     * @ORM\OneToMany(targetEntity=CofStock::class, mappedBy="product", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Stock::class, mappedBy="product", orphanRemoval=true)
      */
     private $stocks;
 
@@ -75,14 +75,14 @@ class CofProduct
     }
 
     /**
-     * @return Collection<int, CofStock>
+     * @return Collection<int, Stock>
      */
     public function getStocks(): Collection
     {
         return $this->stocks;
     }
 
-    public function addStock(CofStock $stock): self
+    public function addStock(Stock $stock): self
     {
         if (!$this->stocks->contains($stock)) {
             $this->stocks[] = $stock;
@@ -92,7 +92,7 @@ class CofProduct
         return $this;
     }
 
-    public function removeStock(CofStock $stock): self
+    public function removeStock(Stock $stock): self
     {
         if ($this->stocks->removeElement($stock)) {
             // set the owning side to null (unless already changed)

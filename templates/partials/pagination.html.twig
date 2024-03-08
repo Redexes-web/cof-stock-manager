@@ -17,25 +17,25 @@
 
 			{% if previous is defined %}
 				<li class="page-item">
-					<a class="page-link" rel="prev" hx-get="{{ path(route, query|merge({(pageParameterName): previous})) }}" hx-target="#sells" hx-swap="innerHTML">&laquo;&nbsp;{{ 'label_previous'|trans({}, 'KnpPaginatorBundle') }}</a>
+					<a class="page-link cursor-pointer" rel="prev" hx-get="{{ path(route, query|merge({(pageParameterName): previous})) }}" hx-target="#sells" hx-swap="innerHTML">&laquo;&nbsp;{{ 'label_previous'|trans({}, 'KnpPaginatorBundle') }}</a>
 				</li>
 			{% else %}
 				<li class="page-item disabled">
-					<span class="page-link">&laquo;&nbsp;{{ 'label_previous'|trans({}, 'KnpPaginatorBundle') }}</span>
+					<span class="page-link cursor-pointer">&laquo;&nbsp;{{ 'label_previous'|trans({}, 'KnpPaginatorBundle') }}</span>
 				</li>
 			{% endif %}
 
 			{% if startPage > 1 %}
 				<li class="page-item">
-					<a class="page-link" hx-get="{{ path(route, query|merge({(pageParameterName): 1})) }}" hx-target="#sells" hx-swap="innerHTML">1</a>
+					<a class="page-link cursor-pointer" hx-get="{{ path(route, query|merge({(pageParameterName): 1})) }}" hx-target="#sells" hx-swap="innerHTML">1</a>
 				</li>
 				{% if startPage == 3 %}
 					<li class="page-item">
-						<a class="page-link" hx-get="{{ path(route, query|merge({(pageParameterName): 2})) }}" hx-target="#sells" hx-swap="innerHTML">2</a>
+						<a class="page-link cursor-pointer" hx-get="{{ path(route, query|merge({(pageParameterName): 2})) }}" hx-target="#sells" hx-swap="innerHTML">2</a>
 					</li>
 				{% elseif startPage != 2 %}
 					<li class="page-item disabled">
-						<span class="page-link">&hellip;</span>
+						<span class="page-link cursor-pointer">&hellip;</span>
 					</li>
 				{% endif %}
 			{% endif %}
@@ -43,11 +43,11 @@
 			{% for page in pagesInRange %}
 				{% if page != current %}
 					<li class="page-item">
-						<a class="page-link" hx-get="{{ path(route, query|merge({(pageParameterName): page})) }}" hx-target="#sells" hx-swap="innerHTML">{{ page }}</a>
+						<a class="page-link cursor-pointer" hx-get="{{ path(route, query|merge({(pageParameterName): page})) }}" hx-target="#sells" hx-swap="innerHTML">{{ page }}</a>
 					</li>
 				{% else %}
 					<li class="page-item active">
-						<span class="page-link">{{ page }}</span>
+						<span class="page-link cursor-pointer">{{ page }}</span>
 					</li>
 				{% endif %}
 
@@ -57,26 +57,26 @@
 				{% if pageCount > (endPage + 1) %}
 					{% if pageCount > (endPage + 2) %}
 						<li class="page-item disabled">
-							<span class="page-link">&hellip;</span>
+							<span class="page-link cursor-pointer">&hellip;</span>
 						</li>
 					{% else %}
 						<li class="page-item">
-							<a class="page-link"  hx-get="{{ path(route, query|merge({(pageParameterName): (pageCount - 1)})) }}" hx-target="#sells" hx-swap="innerHTML">{{ pageCount -1 }}</a>
+							<a class="page-link cursor-pointer"  hx-get="{{ path(route, query|merge({(pageParameterName): (pageCount - 1)})) }}" hx-target="#sells" hx-swap="innerHTML">{{ pageCount -1 }}</a>
 						</li>
 					{% endif %}
 				{% endif %}
 				<li class="page-item">
-					<a class="page-link" hx-get="{{ path(route, query|merge({(pageParameterName): pageCount})) }}" hx-target="#sells" hx-swap="innerHTML">{{ pageCount }}</a>
+					<a class="page-link cursor-pointer" hx-get="{{ path(route, query|merge({(pageParameterName): pageCount})) }}" hx-target="#sells" hx-swap="innerHTML">{{ pageCount }}</a>
 				</li>
 			{% endif %}
 
 			{% if next is defined %}
 				<li class="page-item">
-					<a class="page-link" rel="next" hx-get="{{ path(route, query|merge({(pageParameterName): next})) }}" hx-target="#sells" hx-swap="innerHTML">{{ 'label_next'|trans({}, 'KnpPaginatorBundle') }}&nbsp;&raquo;</a>
+					<a class="page-link cursor-pointer" rel="next" hx-get="{{ path(route, query|merge({(pageParameterName): next})) }}" hx-target="#sells" hx-swap="innerHTML">{{ 'label_next'|trans({}, 'KnpPaginatorBundle') }}&nbsp;&raquo;</a>
 				</li>
 			{% else %}
 				<li class="page-item disabled">
-					<span class="page-link">{{ 'label_next'|trans({}, 'KnpPaginatorBundle') }}&nbsp;&raquo;</span>
+					<span class="page-link cursor-pointer">{{ 'label_next'|trans({}, 'KnpPaginatorBundle') }}&nbsp;&raquo;</span>
 				</li>
 			{% endif %}
 		</ul>

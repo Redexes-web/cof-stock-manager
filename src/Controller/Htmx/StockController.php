@@ -3,13 +3,13 @@
 namespace App\Controller\Htmx;
 
 use App\Entity\Sell;
-use App\Entity\CofStock;
-use App\Entity\CofProduct;
-use App\Entity\CofSupplier;
+use App\Entity\Stock;
+use App\Entity\Product;
+use App\Entity\Supplier;
 use App\Repository\SellRepository;
-use App\Repository\CofStockRepository;
-use App\Repository\CofProductRepository;
-use App\Repository\CofSupplierRepository;
+use App\Repository\StockRepository;
+use App\Repository\ProductRepository;
+use App\Repository\SupplierRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,17 +21,17 @@ class StockController extends AbstractController
     /**
      * @Route("htmx/stock/decrease/{id}", name="htmx_stock_decrease")
      * 
-     * @param CofSupplier $supplier
+     * @param Supplier $supplier
      * @return Response
      */
     public function htmx_stock_decrease(
         int $id,
-        CofProductRepository $productRepository,
-        CofSupplierRepository $supplierRepository,
-        CofStockRepository $stockRepository
+        ProductRepository $productRepository,
+        SupplierRepository $supplierRepository,
+        StockRepository $stockRepository
     ): Response {
         /**
-         * @var ?CofStock $stock
+         * @var ?Stock $stock
          */
         $stock = $stockRepository->find($id);
         if (!$stock)
@@ -49,17 +49,17 @@ class StockController extends AbstractController
     /**
      * @Route("htmx/stock/increase/{id}", name="htmx_stock_increase")
      * 
-     * @param CofSupplier $supplier
+     * @param Supplier $supplier
      * @return Response
      */
     public function htmx_stock_increase(
         int $id,
-        CofProductRepository $productRepository,
-        CofSupplierRepository $supplierRepository,
-        CofStockRepository $stockRepository
+        ProductRepository $productRepository,
+        SupplierRepository $supplierRepository,
+        StockRepository $stockRepository
     ): Response {
         /**
-         * @var ?CofStock $stock
+         * @var ?Stock $stock
          */
         $stock = $stockRepository->find($id);
         if (!$stock)
@@ -74,18 +74,18 @@ class StockController extends AbstractController
     /**
      * @Route("htmx/stock/update/{id}", name="htmx_stock_update")
      * 
-     * @param CofSupplier $supplier
+     * @param Supplier $supplier
      * @return Response
      */
     public function htmx_stock_update(
         int $id,
         Request $request,
-        CofProductRepository $productRepository,
-        CofSupplierRepository $supplierRepository,
-        CofStockRepository $stockRepository
+        ProductRepository $productRepository,
+        SupplierRepository $supplierRepository,
+        StockRepository $stockRepository
     ): Response {
         /**
-         * @var ?CofStock $stock
+         * @var ?Stock $stock
          */
         $stock = $stockRepository->find($id);
         if (!$stock)

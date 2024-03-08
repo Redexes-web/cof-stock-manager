@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\CofStockRepository;
+use App\Repository\StockRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=CofStockRepository::class)
+ * @ORM\Entity(repositoryClass=StockRepository::class)
  */
-class CofStock
+class Stock
 {
     /**
      * @ORM\Id
@@ -23,13 +23,13 @@ class CofStock
     private $stock;
 
     /**
-     * @ORM\ManyToOne(targetEntity=CofProduct::class, inversedBy="stocks")
+     * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="stocks")
      * @ORM\JoinColumn(nullable=false)
      */
     private $product;
 
     /**
-     * @ORM\ManyToOne(targetEntity=CofSupplier::class, inversedBy="stocks")
+     * @ORM\ManyToOne(targetEntity=Supplier::class, inversedBy="stocks")
      * @ORM\JoinColumn(nullable=false)
      */
     private $supplier;
@@ -51,24 +51,24 @@ class CofStock
         return $this;
     }
 
-    public function getProduct(): ?CofProduct
+    public function getProduct(): ?Product
     {
         return $this->product;
     }
 
-    public function setProduct(?CofProduct $product): self
+    public function setProduct(?Product $product): self
     {
         $this->product = $product;
 
         return $this;
     }
 
-    public function getSupplier(): ?CofSupplier
+    public function getSupplier(): ?Supplier
     {
         return $this->supplier;
     }
 
-    public function setSupplier(?CofSupplier $supplier): self
+    public function setSupplier(?Supplier $supplier): self
     {
         $this->supplier = $supplier;
 

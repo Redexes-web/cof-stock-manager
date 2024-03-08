@@ -2,8 +2,8 @@
 
 namespace App\Controller\Htmx;
 
-use App\Entity\CofSupplier;
-use App\Repository\CofSupplierRepository;
+use App\Entity\Supplier;
+use App\Repository\SupplierRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,16 +16,16 @@ class SupplierController extends AbstractController
     /**
      * @Route("htmx/supplier/new", name="htmx_supplier_new")
      * 
-     * @param CofSupplier $supplier
+     * @param Supplier $supplier
      * @return Response
      */
     public function htmx_supplier_new(
         Request $request,
-        CofSupplierRepository $supplierRepository,
+        SupplierRepository $supplierRepository,
         SluggerInterface $slugger
     ): Response {
         if ($request->isMethod('POST')) {
-            $supplier = new CofSupplier();
+            $supplier = new Supplier();
             $supplier->setName($request->request->get('name'));
             $slug = $slugger->slug($supplier->getName());
             $slugExist = $supplierRepository->findOneBy(['slug' => $slug]);
@@ -47,15 +47,15 @@ class SupplierController extends AbstractController
     /**
      * @Route("htmx/supplier/{id}/delete", name="htmx_supplier_delete")
      * 
-     * @param CofSupplier $supplier
+     * @param Supplier $supplier
      * @return Response
      */
     public function htmx_supplier_delete(
         int $id,
-        CofSupplierRepository $supplierRepository
+        SupplierRepository $supplierRepository
     ): Response {
         /**
-         * @var ?CofSupplier $supplier
+         * @var ?Supplier $supplier
          */
         $supplier = $supplierRepository->find($id);
         $errors = [];
@@ -77,17 +77,17 @@ class SupplierController extends AbstractController
     /**
      * @Route("htmx/supplier/{id}/edit", name="htmx_supplier_edit")
      * 
-     * @param CofSupplier $supplier
+     * @param Supplier $supplier
      * @return Response
      */
     public function htmx_supplier_edit(
         int $id,
         Request $request,
-        CofSupplierRepository $supplierRepository,
+        SupplierRepository $supplierRepository,
         SluggerInterface $slugger
     ): Response {
         /**
-         * @var ?CofSupplier $supplier
+         * @var ?Supplier $supplier
          */
         $supplier = $supplierRepository->find($id);
         if ($request->isMethod('POST')) {
@@ -114,15 +114,15 @@ class SupplierController extends AbstractController
     /**
      * @Route("htmx/supplier/{id}/load-details", name="htmx_supplier_load_details")
      * 
-     * @param CofSupplier $supplier
+     * @param Supplier $supplier
      * @return Response
      */
     public function htmx_supplier_load(
         int $id,
-        CofSupplierRepository $supplierRepository
+        SupplierRepository $supplierRepository
     ): Response {
         /**
-         * @var ?CofSupplier $supplier
+         * @var ?Supplier $supplier
          */
         $supplier = $supplierRepository->find($id);
         if (!$supplier)
@@ -135,11 +135,11 @@ class SupplierController extends AbstractController
     /**
      * @Route("htmx/suppliers-load", name="htmx_load_suppliers")
      * 
-     * @param CofSupplier $supplier
+     * @param Supplier $supplier
      * @return Response
      */
     public function htmx_reload_suppliers(
-        CofSupplierRepository $supplierRepository
+        SupplierRepository $supplierRepository
     ): Response {
         return $this->render('htmx/supplier/list.html.twig', [
             'suppliers' => $supplierRepository->findAll(),

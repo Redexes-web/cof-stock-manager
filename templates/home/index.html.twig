@@ -12,17 +12,38 @@
 	</div>
 	<div class="row" id="suppliers" hx-get="{{ path('htmx_load_suppliers') }}" hx-target="#suppliers" hx-swap="innerHTML" hx-trigger="load"></div>
 	<h2>Liste des produits</h2>
-	<div class="row">
-		<div class="col-7">Nom</div>
-		<div class="col-2">Prix</div>
-		<div class="col-3">Action</div>
+	<div class="row h-54px bg-secondary rounded-top">
+		<div class="col-7 d-flex justify-content-center align-items-center">
+			<p class="fw-bold m-0 text-light">
+				Nom
+			</p>
+		</div>
+		<div class="col-2 d-flex justify-content-center align-items-center">
+			<p class="fw-bold m-0 text-light">
+				Prix
+			</p>
+		</div>
+		<div class="col-3 d-flex justify-content-center align-items-center">
+			<p class="fw-bold m-0 text-light">
+				Action
+			</p>
+		</div>
 	</div>
 	{% for product in products %}
-		<div class="row" id="product-{{ product.id }}">
-			<div class="col-7">{{ product.name }}</div>
-			<div class="col-2">{{ product.price }}</div>
-			<div class="col-3">
-				<p class="btn btn-danger" hx-get="{{ path('htmx_product_delete',{id:product.id}) }}" hx-confirm="Etes-vous sûr?" hx-target="#product-{{ product.id }}" hx-swap="outerHTML">Supprimer</p>
+		<div class="row h-54px {{ loop.index0 % 2 ? 'bg-dark-subtle' : 'bg-body-secondary' }} {{ loop.last ? "rounded-bottom" : "" }}" id="product-{{ product.id }}">
+			<div class="col-7 d-flex align-items-center">
+				<p class="mb-0">
+					{{ product.name }}
+				</p>
+			</div>
+			<div class="col-2 d-flex align-items-center">
+				<p class="mb-0">
+					{{ product.price }}
+					€
+				</p>
+			</div>
+			<div class="col-3 d-flex align-items-center justify-content-center">
+				<p class="btn btn-danger mb-0" hx-get="{{ path('htmx_product_delete',{id:product.id}) }}" hx-confirm="Etes-vous sûr?" hx-target="#product-{{ product.id }}" hx-swap="outerHTML">Supprimer</p>
 			</div>
 		</div>
 	{% endfor %}
