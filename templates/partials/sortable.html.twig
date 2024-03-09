@@ -7,12 +7,14 @@
 		{% set activeIteration = loop.index0 %}
 	{% endif %}
 {% endfor %}
-<label for="sort" class="form-label">Trier par</label>
-<div class="container">
-	<button class="select" name="select" value="options">{{optionLabelSelected ?? options.options|json_decode[0].label}}</button>
-	<div class="options">
-		{% for opt in options.options|json_decode %}
-			<p class="item {{  loop.index0 == activeIteration ? 'active' :''}}" hx-get="{{ baseUrl }}?sort={{ opt.value }}&direction={{ opt.direction }}" value="{{ opt.value }}" hx-target="#sells" hx-swap="innerHtml" hx-trigger="click">{{ opt.label }}</p>
-		{% endfor %}
+<div class="d-block">
+	<label for="sort" class="form-label">Trier par</label>
+	<div class="container">
+		<button class="select" name="select" value="options">{{optionLabelSelected ?? options.options|json_decode[0].label}}</button>
+		<div class="options">
+			{% for opt in options.options|json_decode %}
+				<p class="item {{  loop.index0 == activeIteration ? 'active' :''}}" hx-get="{{ baseUrl }}?sort={{ opt.value }}&direction={{ opt.direction }}{{ options.currentMonth ? "&month=" ~ options.currentMonth : '' }}" value="{{ opt.value }}" hx-target="#sells" hx-swap="innerHtml" hx-trigger="click">{{ opt.label }}</p>
+			{% endfor %}
+		</div>
 	</div>
 </div>

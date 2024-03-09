@@ -1,3 +1,4 @@
+<div class="d-flex">
 {{ knp_pagination_sortable(sells, 'date', 's.soldAt', {
     'options': [
         {
@@ -20,8 +21,10 @@
             'label': 'Nom du produit (inverse)',
             'direction': 'desc'
         }
-    ]|json_encode,'currentSort': sort, 'currentDirection' : direction
+    ]|json_encode,'currentSort': sort, 'currentDirection' : direction, 'currentMonth': month
 }, {}, 'partials/sortable.html.twig') }}
+{% include 'htmx/sell/filters.html.twig' %}
+</div>
 
 {# {{ knp_pagination_sortable(sells, 'name', 'p.name', {}, {}, 'partials/sortable.html.twig') }} #}
 <div class="row h-54px bg-secondary rounded-top mt-3">

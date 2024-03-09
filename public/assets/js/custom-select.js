@@ -1,37 +1,31 @@
 $(document).ready(function () {
 
-    document.addEventListener('htmx:afterSwap', function (event) {
-        const select = document.querySelector('.select');
-        const optionBox = document.querySelector('.options');
-        const options = [...document.querySelectorAll('.options .item')];
+    function initializeSelect(select) {
+        const optionBox = select.nextElementSibling;
+        const options = [...optionBox.querySelectorAll('.item')];
 
         let activeOption = 0; // default should be 0
 
-        window.onclick = (e) => {
-            if (!e.target.className.includes('select')) {
-                select.classList.remove('active');
-                optionBox.classList.remove('active');
-            } else {
-                select.classList.toggle('active');
-                optionBox.classList.toggle('active');
-            }
-        }
+        select.addEventListener('click', function (e) {
+            select.classList.toggle('active');
+            optionBox.classList.toggle('active');
+        });
 
-        options.forEach((item, i) => {
-            item.onmousemove = () => {
-                hoverOptions(i);
+        optionBox.addEventListener('click', function (e) {
+            if (e.target.classList.contains('item')) {
+                const index = options.indexOf(e.target);
+                hoverOptions(index);
             }
-        })
+        });
 
-        const hoverOptions = (i) => {
+        function hoverOptions(i) {
             options[activeOption].classList.remove('active');
             options[i].classList.add('active');
             activeOption = i;
-            setValue();
         }
 
-        window.onkeydown = (e) => {
-            if (select.className.includes('active')) {
+        window.onkeydown = function (e) {
+            if (select.classList.contains('active')) {
                 e.preventDefault();
                 if (e.key === 'ArrowDown' && activeOption < options.length - 1) {
                     hoverOptions(activeOption + 1);
@@ -43,11 +37,12 @@ $(document).ready(function () {
                 }
             }
         }
+    }
 
-        // const setValue = () => {
-        //     select.innerHTML = select.value = options[activeOption].innerHTML;
-        // }
-
-        // setValue();
+    document.addEventListener('htmx:afterSwap', function (event) {
+        const selects = document.querySelectorAll('.select');
+        selects.forEach(select => {
+            initializeSelect(select);
+        });
     });
 });

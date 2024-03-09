@@ -108,18 +108,24 @@ class SellController extends AbstractController
          * @var ?Supplier $supplier
          */
         $page = $request->query->get('page', 1);
+        dump($request);
         $sort = $request->query->get('sort', 's.soldAt');
         $direction = $request->query->get('direction', 'desc');
+        $month = $request->query->get('month', null);
         $supplier = $supplierRepository->find($id);
+        $sellsPerMonth = $sellRepository->sellsPerMonthBySupplier($supplier);
+        dump($sellsPerMonth);
         if (!$supplier)
             throw $this->createNotFoundException('The supplier does not exist');
-        $query = $sellRepository->findBySupplierQuery($supplier, $sort, $direction);
+        $query = $sellRepository->findBySupplierQuery($supplier, $sort, $direction, $month);
         $sells = $paginator->paginate($query, $page, 10);
         return $this->render('htmx/sell/list.html.twig', [
             'supplier' => $supplier,
             'sells' => $sells,
             'sort' => $sort,
-            'direction' => $direction
+            'direction' => $direction,
+            'month' => $month,
+            'sellsPerMonth' => $sellsPerMonth,
         ]);
     }
     /**

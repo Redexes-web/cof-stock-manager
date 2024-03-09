@@ -1,0 +1,20 @@
+{% set spm = sellsPerMonth %}
+{% set baseUrl = app.request.uri|split('?')[0]  %}
+{% set month = month|default('') %}
+{% set baseUrl = baseUrl %}
+{% if spm is not empty %}
+	{% set baseUrl = baseUrl ~ '?sort=' ~ sort ~ '&direction=' ~ direction %}
+	<div class="d-block">
+		<label for="sort" class="form-label">Filtrer par Date</label>
+		<div class="container">
+			<button class="select" name="select" value="options">{{ month ? month|date("Y-m-d H:i:s", "Europe/Paris")|format_datetime(pattern="MMMM yyyy", locale='fr') ~ ' (' ~ sells.getTotalItemCount ~ ')' : "Toutes les ventes" }}</button>
+			<div class="options">
+				<p class="item {{ month == '' ? 'active' :''}}" hx-get="{{ baseUrl }}" value="" hx-target="#sells" hx-swap="innerHtml" hx-trigger="click">toutes les ventes</p>
+				{% for mth in spm %}
+					<p class="item {{  mth.month|date('Y-m') == month ? 'active' :''}}" hx-get="{{ baseUrl ~ '&month=' ~ mth.month|date('Y-m') }}" value="{{ mth.month|date('Y-m') }}" hx-target="#sells" hx-swap="innerHtml" hx-trigger="click">{{  mth.month|date("Y-m-d H:i:s", "Europe/Paris")|format_datetime(pattern="MMMM yyyy", locale='fr') ~ ' (' ~ mth.nbSells ~ ')' }}</p>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+
+{% endif %}
