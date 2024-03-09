@@ -26,7 +26,7 @@
 				</div>
 				<div class="col-md-6">
 					<label class="mt-2 " for="soldAt">Date de vente</label>
-					<input type="date" class="form-control" id="soldAt" name="soldAt" value="{{ date()|date('Y-m-d') }}" autocomplete="off">
+					<input type="date" class="form-control" id="soldAt" name="soldAt" value="{{ date()|date('Y-m-d') }}" autocomplete="off" min="{{ supplier.startAt|date('Y-m-d')}}" max="{{ supplier.endAt|date('Y-m-d')}}">
 				</div>
 			</div>
 		</div>
